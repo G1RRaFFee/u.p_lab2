@@ -1,7 +1,6 @@
 import re
-from typing import List
 
-HYPERLINK_PATTERN = r'https?://[^\s]+'
+HYPERLINK_PATTERN = r'https?://[\w.-]+(?:\.[\w.-]+)*(?:[/?#][^\s]*)?'
 
-def find_hyperlinks(text: str) -> List[str]:
+def find_hyperlinks(text: str) -> list[str]:
     return re.findall(HYPERLINK_PATTERN, text)

@@ -1,12 +1,12 @@
 import argparse
 from core.service.hyperlink_service import HyperlinkSearchService
-
+import requests
+from bs4 import BeautifulSoup
 import argparse
 import os
 from infrastructure.container import Container
 
 def main():
-    # Парсинг аргументов командной строки
     parser = argparse.ArgumentParser(description="Search hyperlinks in text, file, or URL.")
     parser.add_argument('--input', help="Text to search for hyperlinks.")
     parser.add_argument('--file', help="File path to search for hyperlinks.")
@@ -31,7 +31,6 @@ def main():
             return
         result = hyperlink_search_controller.search_in_file(args.file)
     elif args.url:
-        # Поиск по URL
         result = hyperlink_search_controller.search_in_url(args.url)
     else:
         print("Error: You must provide either --input, --file, or --url.")
