@@ -1,18 +1,18 @@
-from infrastructure.controller.web.web_handler import WebHandler
-from infrastructure.controller.file.file_handler import FileHandler
-from core.service.hyperlink_service import HyperlinkService
+from core.service.hyperlink_service import HyperlinkSearchService
+from core.entity.model import SearchResult
 
-class HyperlinkController:
-    @staticmethod
-    def get_links_from_url(url: str):
-        html_content = WebHandler.fetch_html(url)
-        return HyperlinkService.extract_hyperlinks(html_content)
+class HyperlinkSearchController:
+    def __init__(self, hyperlink_search_service: HyperlinkSearchService):
+        self.hyperlink_search_service = hyperlink_search_service
 
-    @staticmethod
-    def get_links_from_file(file_path: str):
-        file_content = FileHandler.read_file(file_path)
-        return HyperlinkService.extract_hyperlinks(file_content)
+    def search_in_text(self, text: str) -> SearchResult:
+        result = self.hyperlink_search_service.search_in_text(text)
+        return result
 
-    @staticmethod
-    def get_links_from_text(text: str):
-        return HyperlinkService.extract_hyperlinks(text)
+    def search_in_file(self, file_path: str) -> SearchResult:
+        result = self.hyperlink_search_service.search_in_file(file_path)
+        return result
+    
+    def search_in_url(self, url: str) -> SearchResult:
+        result = self.hyperlink_search_service.search_in_url(url)
+        return result

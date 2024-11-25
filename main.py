@@ -1,24 +1,47 @@
-from infrastructure.controller.hyperlink_controller import HyperlinkController
+import argparse
+from core.service.hyperlink_service import HyperlinkSearchService
+
+import argparse
+import os
+from infrastructure.container import Container
 
 def main():
-    option = input("Choose input source (url/file/text): ").strip().lower()
+    # Парсинг аргументов командной строки
+    parser = argparse.ArgumentParser(description="Search hyperlinks in text, file, or URL.")
+    parser.add_argument('--input', help="Text to search for hyperlinks.")
+    parser.add_argument('--file', help="File path to search for hyperlinks.")
+    parser.add_argument('--url', help="URL to search for hyperlinks.")
+    parser.add_argument('--output', required=True, help="Output JSON file to save results.")
     
-    if option == "url":
-        url = input("Enter URL: ")
-        links = HyperlinkController.get_links_from_url(url)
-    elif option == "file":
-        file_path = input("Enter file path: ")
-        links = HyperlinkController.get_links_from_file(file_path)
-    elif option == "text":
-        text = input("Enter text: ")
-        links = HyperlinkController.get_links_from_text(text)
-    else:
-        print("Invalid option.")
-        return
+    args = parser.parse_args()
 
-    print("Found links:")
-    for link in links:
-        print(link.url)
+    # Инициализируем DI контейнер
+    container = Container()
+
+    # Получаем контроллер из контейнера
+    hyperlink_search_controller = container.hyperlink_search_controller()
+
+    if args.input:
+        # Поиск по тексту
+        result = hyperlink_search_controller.search_in_text(args.input)
+    elif args.file:
+        # Поиск по файлу
+        if not os.path.exists(args.file):
+            print(f"Error: The file {args.file} does not exist.")
+            return
+        result = hyperlink_search_controller.search_in_file(args.file)
+    elif args.url:
+        # Поиск по URL
+        result = hyperlink_search_controller.search_in_url(args.url)
+    else:
+        print("Error: You must provide either --input, --file, or --url.")
+        return
+    
+    # Сохраняем результаты в файл
+    hyperlink_search_service = HyperlinkSearchService(container.file_repository())
+    hyperlink_search_service.save_results(result, args.output)
+
+    print(f"Results saved to {args.output}")
 
 if __name__ == "__main__":
     main()
