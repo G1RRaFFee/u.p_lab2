@@ -1,10 +1,8 @@
 import argparse
-from core.service.hyperlink_service import HyperlinkSearchService
-import requests
-from bs4 import BeautifulSoup
-import argparse
 import os
-from infrastructure.container import Container
+
+from src.core.service.hyperlink_service import HyperlinkSearchService
+from src.infrastructure.container import Container
 
 def main():
     parser = argparse.ArgumentParser(description="Search hyperlinks in text, file, or URL.")
@@ -15,17 +13,13 @@ def main():
     
     args = parser.parse_args()
 
-    # Инициализируем DI контейнер
     container = Container()
 
-    # Получаем контроллер из контейнера
     hyperlink_search_controller = container.hyperlink_search_controller()
 
     if args.input:
-        # Поиск по тексту
         result = hyperlink_search_controller.search_in_text(args.input)
     elif args.file:
-        # Поиск по файлу
         if not os.path.exists(args.file):
             print(f"Error: The file {args.file} does not exist.")
             return
