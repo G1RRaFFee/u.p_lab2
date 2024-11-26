@@ -12,7 +12,7 @@ logger = logging.getLogger()
 def validate_url(url: str) -> bool:
     try:
         result = urlparse(url)
-        return all([result.scheme, result.netloc])  # Проверка на схему (http/https) и домен
+        return all([result.scheme, result.netloc])
     except ValueError:
         return False
 

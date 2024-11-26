@@ -1,5 +1,5 @@
-from core.service.hyperlink_service import HyperlinkSearchService
-from core.entity.model import SearchResult
+from src.core.service.hyperlink_service import HyperlinkSearchService
+from src.core.entity.model import SearchResult
 
 class HyperlinkSearchController:
     def __init__(self, hyperlink_search_service: HyperlinkSearchService):

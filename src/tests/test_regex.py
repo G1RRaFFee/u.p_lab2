@@ -1,5 +1,5 @@
 import unittest
-from core.entity.regex import find_hyperlinks 
+from src.core.entity.regex import find_hyperlinks
 
 class TestRegex(unittest.TestCase):
     def test_find_hyperlinks(self):

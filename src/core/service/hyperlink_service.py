@@ -1,10 +1,10 @@
 from requests import get
 from requests.exceptions import RequestException
 
-from core.entity.regex import find_hyperlinks
-from core.entity.model import SearchResult
-from core.repository.repository import Repository
-from infrastructure.constants import HttpStatus
+from src.core.entity.regex import find_hyperlinks
+from src.core.entity.model import SearchResult
+from src.core.repository.repository import Repository
+from src.infrastructure.constants import HttpStatus
 
 class HyperlinkSearchService:
     def __init__(self, file_repository: Repository):

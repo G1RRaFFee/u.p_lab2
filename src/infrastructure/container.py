@@ -1,8 +1,8 @@
 from dependency_injector import containers, providers
 
-from core.service.hyperlink_service import HyperlinkSearchService
-from infrastructure.repository.json_file_repository import JsonFileRepository
-from infrastructure.controller.hyperlink_controller import HyperlinkSearchController
+from src.core.service.hyperlink_service import HyperlinkSearchService
+from src.infrastructure.repository.json_file_repository import JsonFileRepository
+from src.infrastructure.controller.hyperlink_controller import HyperlinkSearchController
 
 class Container(containers.DeclarativeContainer):
     file_repository = providers.Singleton(JsonFileRepository)

@@ -1,6 +1,6 @@
 import re
 
-HYPERLINK_PATTERN = r'https?://[\w.-]+(?:\.[\w.-]+)*(?:[/?#][^\s]*)?'
+from src.infrastructure.constants import HYPERLINK_PATTERN
 
 def find_hyperlinks(text: str) -> list[str]:
     return re.findall(HYPERLINK_PATTERN, text)
